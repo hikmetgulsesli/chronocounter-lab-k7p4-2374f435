@@ -33,6 +33,7 @@ export interface ChronoCounterState extends ChronoCounterPersistedState {
   route: ChronoCounterPanel;
   storageStatus: ChronoCounterStorageState;
   lastError: string | null;
+  lastAction: string | null;
   counts: {
     records: number;
     running: number;
@@ -49,6 +50,7 @@ export interface ChronoCounterAppBridge {
   counts: ChronoCounterState['counts'];
   storageStatus: ChronoCounterStorageState;
   lastError: string | null;
+  lastAction: string | null;
 }
 
 export interface ChronoCounterStore {
@@ -60,6 +62,8 @@ export interface ChronoCounterStore {
   cancelEdit(): void;
   applyPreferences(preferences?: Partial<ChronoCounterPreferences>): void;
   discardPreferenceChanges(): void;
+  retryPersistence(): void;
+  recordAction(action: string): void;
   factoryReset(): void;
   clearError(): void;
   getBridge(): ChronoCounterAppBridge;
@@ -98,13 +102,19 @@ function getPersistedState(state: ChronoCounterState): ChronoCounterPersistedSta
   };
 }
 
-function buildState(persisted: ChronoCounterPersistedState, storageStatus: ChronoCounterStorageState, lastError: string | null): ChronoCounterState {
+function buildState(
+  persisted: ChronoCounterPersistedState,
+  storageStatus: ChronoCounterStorageState,
+  lastError: string | null,
+  lastAction: string | null,
+): ChronoCounterState {
   return {
     ...persisted,
     activeScreen: toScreen(persisted.activePanel),
     route: persisted.activePanel,
     storageStatus,
     lastError,
+    lastAction,
     counts: getCounts(persisted.records),
   };
 }
@@ -120,10 +130,20 @@ function createDefaultPersistedState(): ChronoCounterPersistedState {
 
 export function createChronoCounterStore(repository: ChronoCounterRepository = chronocounterLabK7p4Repository): ChronoCounterStore {
   const loaded = repository.load();
-  let state = buildState(loaded.data ?? createDefaultPersistedState(), loaded.status, loaded.error);
+  let state = buildState(
+    loaded.data ?? createDefaultPersistedState(),
+    loaded.status,
+    loaded.error,
+    loaded.error ? 'Storage recovery' : 'Session initialized',
+  );
   const listeners = new Set<() => void>();
 
-  function emit(nextPersisted: ChronoCounterPersistedState, shouldPersist = true, lastError = state.lastError) {
+  function emit(
+    nextPersisted: ChronoCounterPersistedState,
+    shouldPersist = true,
+    lastError = state.lastError,
+    lastAction = state.lastAction,
+  ) {
     let storageStatus = state.storageStatus;
     let error = lastError;
 
@@ -133,7 +153,7 @@ export function createChronoCounterStore(repository: ChronoCounterRepository = c
       error = saved.error;
     }
 
-    state = buildState(nextPersisted, storageStatus, error);
+    state = buildState(nextPersisted, storageStatus, error, lastAction);
     listeners.forEach((listener) => listener());
   }
 
@@ -148,7 +168,7 @@ export function createChronoCounterStore(repository: ChronoCounterRepository = c
     },
 
     navigate(panel) {
-      emit({ ...getPersistedState(state), activePanel: panel });
+      emit({ ...getPersistedState(state), activePanel: panel }, true, null, `Opened ${toScreen(panel)}`);
     },
 
     createRecord() {
@@ -167,12 +187,12 @@ export function createChronoCounterStore(repository: ChronoCounterRepository = c
         activePanel: 'editor',
         selectedRecordId: record.id,
         records: [record, ...state.records],
-      });
+      }, true, null, 'Created stopwatch record');
     },
 
     saveSelectedRecord() {
       if (!state.selectedRecordId) {
-        emit({ ...getPersistedState(state), activePanel: 'operations' }, true, null);
+        emit({ ...getPersistedState(state), activePanel: 'operations' }, true, null, 'Returned to operations');
         return;
       }
 
@@ -183,32 +203,40 @@ export function createChronoCounterStore(repository: ChronoCounterRepository = c
         records: state.records.map((record) =>
           record.id === state.selectedRecordId ? { ...record, status: 'saved', updatedAt: now } : record,
         ),
-      }, true, null);
+      }, true, null, 'Saved stopwatch record');
     },
 
     cancelEdit() {
-      emit({ ...getPersistedState(state), activePanel: 'operations', selectedRecordId: null }, true, null);
+      emit({ ...getPersistedState(state), activePanel: 'operations', selectedRecordId: null }, true, null, 'Canceled stopwatch edit');
     },
 
     applyPreferences(preferences = {}) {
       emit({
         ...getPersistedState(state),
         preferences: { ...state.preferences, ...preferences },
-      }, true, null);
+      }, true, null, 'Applied configuration');
     },
 
     discardPreferenceChanges() {
-      emit(getPersistedState(state), false, null);
+      emit(getPersistedState(state), false, null, 'Discarded pending preference changes');
+    },
+
+    retryPersistence() {
+      emit(getPersistedState(state), true, null, 'Retried local persistence');
+    },
+
+    recordAction(action) {
+      emit(getPersistedState(state), true, null, action);
     },
 
     factoryReset() {
       const cleared = repository.clear();
-      state = buildState(createDefaultPersistedState(), cleared.status, cleared.error);
+      state = buildState(createDefaultPersistedState(), cleared.status, cleared.error, 'Cleared local data and reinitialized session');
       listeners.forEach((listener) => listener());
     },
 
     clearError() {
-      emit(getPersistedState(state), false, null);
+      emit(getPersistedState(state), false, null, 'Cleared recovery message');
     },
 
     getBridge() {
@@ -223,6 +251,7 @@ export function createChronoCounterStore(repository: ChronoCounterRepository = c
         counts: state.counts,
         storageStatus: state.storageStatus,
         lastError: state.lastError,
+        lastAction: state.lastAction,
       };
     },
   };
