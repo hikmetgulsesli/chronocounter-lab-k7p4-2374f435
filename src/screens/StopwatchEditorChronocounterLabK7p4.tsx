@@ -139,7 +139,7 @@ export function StopwatchEditorChronocounterLabK7p4({ actions }: StopwatchEditor
       <div className="flex flex-col gap-sm border-t border-surface-variant pt-lg mt-sm">
       <label className="font-mono-label text-mono-label text-on-surface flex items-center gap-sm" htmlFor="alert_threshold">
                                   Alert Threshold
-                                  <Info title="Triggers visual warning when limit is exceeded." className="text-outline text-[16px] cursor-help" aria-hidden={true} focusable="false" />
+                                  <Info className="text-outline text-[16px] cursor-help" aria-hidden={true} focusable="false" />
       </label>
       <div className="flex items-center gap-md">
       <div className="relative flex items-center bg-surface-container-lowest border border-outline-variant rounded w-40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors">
