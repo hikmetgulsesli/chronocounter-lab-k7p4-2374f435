@@ -36,6 +36,17 @@ body {
   max-width: calc(100vw - 4rem);
 }
 
+[data-setfarm-root='chronocounter-lab-k7p4'] :is(
+  [class*='left-16'],
+  [class*='left-[64px]'],
+  [style*='left: 64px'],
+  [style*='left:64px']
+):is(header, .w-full, .w-screen, [class*='w-[100vw]']) {
+  right: 0;
+  width: calc(100vw - 4rem) !important;
+  max-width: calc(100vw - 4rem) !important;
+}
+
 [data-setfarm-root='chronocounter-lab-k7p4'] :is(.left-16, [class~='left-[64px]']):is(.fixed, .absolute) :is(.w-full, .w-screen, [class~='w-[100vw]']) {
   max-width: 100%;
 }
