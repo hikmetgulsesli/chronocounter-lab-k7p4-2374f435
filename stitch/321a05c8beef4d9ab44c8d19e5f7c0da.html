@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChronoCounter - Operations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#00285d",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-dim": "#0b1326",
+                        "secondary-fixed-dim": "#4edea3",
+                        "background": "#0b1326",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#2d3449",
+                        "error-container": "#93000a",
+                        "surface-bright": "#31394d",
+                        "on-error": "#690005",
+                        "outline-variant": "#424754",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed": "#001a42",
+                        "on-background": "#dae2fd",
+                        "surface-container-lowest": "#060e20",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-secondary-fixed": "#002113",
+                        "tertiary": "#ffb95f",
+                        "surface-container-low": "#131b2e",
+                        "on-primary": "#002e6a",
+                        "surface-container-highest": "#2d3449",
+                        "error": "#ffb4ab",
+                        "secondary-container": "#00a572",
+                        "on-surface-variant": "#c2c6d6",
+                        "primary-fixed": "#d8e2ff",
+                        "on-tertiary-container": "#3e2400",
+                        "surface-tint": "#adc6ff",
+                        "on-secondary": "#003824",
+                        "primary-fixed-dim": "#adc6ff",
+                        "inverse-on-surface": "#283044",
+                        "outline": "#8c909f",
+                        "secondary-fixed": "#6ffbbe",
+                        "inverse-surface": "#dae2fd",
+                        "on-tertiary-fixed": "#2a1700",
+                        "on-tertiary": "#472a00",
+                        "primary-container": "#4d8eff",
+                        "on-surface": "#dae2fd",
+                        "secondary": "#4edea3",
+                        "on-secondary-container": "#00311f",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-container-high": "#222a3d",
+                        "surface-container": "#171f33",
+                        "surface": "#0b1326",
+                        "on-secondary-fixed-variant": "#005236",
+                        "primary": "#adc6ff",
+                        "tertiary-container": "#ca8100",
+                        "inverse-primary": "#005ac2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "margin": "16px",
+                        "gutter": "12px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-data": ["JetBrains Mono"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-table": ["JetBrains Mono"],
+                        "mono-label": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-caps": ["11px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "700" }],
+                        "display-data": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-table": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                        "mono-label": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Minimal custom CSS to supplement Tailwind */
+        .glow-active {
+            box-shadow: 0 0 4px #adc6ff;
+        }
+        .glow-running {
+            box-shadow: 0 0 4px #4edea3;
+        }
+        @keyframes pulse-emerald {
+            0% { opacity: 1; box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.7); }
+            50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(78, 222, 163, 0); }
+            100% { opacity: 1; box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
+        }
+        .pip-running {
+            background-color: #4edea3;
+            animation: pulse-emerald 1.5s infinite;
+        }
+        .pip-paused {
+            background-color: #ffb95f;
+        }
+        .pip-inactive {
+            background-color: #8c909f;
+        }
+        /* Custom scrollbar for data tables */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1326; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #424754; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8c909f; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-hidden antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Shared Component: SideNavBar -->
+<nav class="bg-surface dark:bg-surface h-screen w-16 flex flex-col items-center py-lg border-r border-outline-variant fixed left-0 top-0 z-50">
+<!-- Header / Logo Area -->
+<div class="mb-lg flex flex-col items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center border border-outline-variant relative" title="Lab K7P4">
+<span class="font-label-caps text-label-caps text-on-surface-variant">K7</span>
+<!-- System Health Indicator -->
+<div aria-label="System Health Indicator: Active" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-secondary border border-surface z-10 pip-running"></div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col gap-md flex-1 w-full">
+<!-- Active Tab: Operations -->
+<button class="w-full py-sm flex flex-col items-center gap-xs text-secondary dark:text-secondary scale-95 active:scale-90 transition-transform relative group">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-secondary rounded-r-full"></div>
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+<span class="font-label-caps text-[9px] leading-[10px] uppercase tracking-widest text-center px-1">Operations</span>
+</button>
+<!-- Inactive Tab: Editor -->
+<button class="w-full py-sm flex flex-col items-center gap-xs text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 group">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 0;">edit_note</span>
+<span class="font-label-caps text-[9px] leading-[10px] uppercase tracking-widest text-center px-1 group-hover:text-on-surface-variant transition-colors">Editor</span>
+</button>
+<!-- Inactive Tab: Settings -->
+<button class="w-full py-sm flex flex-col items-center gap-xs text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 group">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-caps text-[9px] leading-[10px] uppercase tracking-widest text-center px-1 group-hover:text-on-surface-variant transition-colors">Settings</span>
+</button>
+</div>
+<!-- Footer Tabs -->
+<div class="mt-auto flex flex-col items-center w-full">
+<button class="w-full py-sm flex flex-col items-center gap-xs text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 group" title="System Health">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">sensors</span>
+</button>
+</div>
+</nav>
+<!-- Shared Component: TopAppBar -->
+<header class="bg-surface-container dark:bg-surface-container h-12 w-full flex items-center border-b border-outline-variant fixed top-0 right-0 left-16 z-40 px-md flex justify-between items-center pl-[calc(4rem+16px)] pr-md transition-all duration-300">
+<!-- Brand / Context -->
+<div class="flex items-center gap-md">
+<span class="font-label-caps text-label-caps tracking-widest text-on-surface uppercase">ChronoCounter</span>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Navigation Links (Breadcrumb style) -->
+<nav class="flex items-center gap-sm">
+<span class="text-primary font-bold font-body-md text-body-md hover:text-primary transition-colors cursor-pointer">Session: 0X-8821</span>
+</nav>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-md">
+<!-- Search Bar (on_right) -->
+<div class="relative w-64 h-8">
+<div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-[16px] text-outline">search</span>
+</div>
+<input class="w-full h-full bg-surface-container-lowest border border-surface-variant rounded focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none pl-8 pr-2 font-mono-label text-mono-label text-on-surface placeholder-outline-variant" placeholder="ACT_SEARCH_RECORDS" type="text"/>
+</div>
+<div class="h-4 w-px bg-outline-variant mx-1"></div>
+<!-- Icon Actions -->
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-80 active:opacity-100 p-1 rounded hover:bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</button>
+<!-- Primary Action -->
+<button class="bg-primary hover:bg-primary-fixed-dim text-on-primary h-8 px-sm rounded font-label-caps text-label-caps uppercase tracking-wider flex items-center gap-1 transition-colors ml-sm">
+<span class="material-symbols-outlined text-[14px]">add</span>
+                ACT_CREATE_RECORD
+            </button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="fixed inset-0 pt-[48px] pl-[64px] bg-background flex flex-col h-screen overflow-hidden">
+<!-- Summary Metrics Strip -->
+<div class="shrink-0 h-20 bg-surface-container-low border-b border-outline-variant flex px-lg py-md gap-lg">
+<!-- Metric 1 -->
+<div class="flex-1 bg-surface-container border border-surface-variant rounded p-sm flex flex-col justify-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Active Sessions</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-data text-[32px] leading-none text-on-surface font-bold">12</span>
+<div class="w-2 h-2 rounded-full pip-running mb-1"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="flex-1 bg-surface-container border border-surface-variant rounded p-sm flex flex-col justify-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Peak Lap Time</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-data text-[32px] leading-none text-primary font-bold">02:14.05</span>
+<span class="font-mono-label text-mono-label text-outline">SEC</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="flex-1 bg-surface-container border border-surface-variant rounded p-sm flex flex-col justify-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Total Events</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-data text-[32px] leading-none text-on-surface font-bold">89</span>
+</div>
+</div>
+<!-- Contextual Chart Area (Placeholder for visual density) -->
+<div class="flex-1 bg-surface-container border border-surface-variant rounded p-sm flex items-center justify-center relative overflow-hidden">
+<div class="absolute bottom-0 left-0 w-full h-1/2 opacity-20" style="background: repeating-linear-gradient(90deg, transparent, transparent 4px, #adc6ff 4px, #adc6ff 5px);"></div>
+<div class="absolute bottom-0 left-0 w-full h-full flex items-end px-2 gap-1">
+<div class="w-full bg-secondary h-[40%] rounded-t-sm opacity-60"></div>
+<div class="w-full bg-secondary h-[60%] rounded-t-sm opacity-60"></div>
+<div class="w-full bg-secondary h-[30%] rounded-t-sm opacity-60"></div>
+<div class="w-full bg-secondary h-[80%] rounded-t-sm opacity-60"></div>
+<div class="w-full bg-secondary h-[50%] rounded-t-sm opacity-60"></div>
+<div class="w-full bg-secondary h-[90%] rounded-t-sm"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase z-10 absolute top-2 left-2">Activity Rate</span>
+</div>
+</div>
+<!-- Master / Detail Layout Area -->
+<div class="flex-1 flex overflow-hidden">
+<!-- Primary List Panel (Master) -->
+<div class="flex-1 bg-background border-r border-outline-variant flex flex-col min-w-[500px]">
+<!-- Table Header -->
+<div class="h-8 bg-surface-container flex items-center px-md border-b border-surface-variant font-label-caps text-label-caps text-on-surface-variant uppercase shrink-0">
+<div class="w-10">ID</div>
+<div class="flex-1">Name</div>
+<div class="w-32 text-right">Current Time</div>
+<div class="w-16 text-right">Laps</div>
+<div class="w-24 text-right">Status</div>
+<div class="w-16 text-center">Action</div>
+</div>
+<!-- Table Body (Scrollable) -->
+<div class="flex-1 overflow-y-auto">
+<!-- Row 1 (Running) -->
+<div class="flex items-center px-md py-2 border-b border-surface-variant hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="w-10 font-mono-label text-mono-label text-outline">01</div>
+<div class="flex-1 font-body-md text-body-md text-on-surface flex items-center gap-2">
+<span>Main Assembly Line</span>
+<span class="px-1.5 py-0.5 rounded text-[10px] leading-none bg-surface-bright text-on-surface border border-outline-variant">A-Priority</span>
+</div>
+<div class="w-32 text-right font-data-table text-data-table text-secondary font-bold">14:02:45.99</div>
+<div class="w-16 text-right font-data-table text-data-table text-on-surface-variant">12</div>
+<div class="w-24 flex items-center justify-end gap-2">
+<div class="w-2 h-2 rounded-full pip-running"></div>
+<span class="font-mono-label text-mono-label text-secondary">Running</span>
+</div>
+<div class="w-16 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-fixed p-1 rounded" title="ACT_SELECT_RECORD">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Row 2 (Paused) -->
+<div class="flex items-center px-md py-2 border-b border-surface-variant hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="w-10 font-mono-label text-mono-label text-outline">02</div>
+<div class="flex-1 font-body-md text-body-md text-on-surface">Secondary Calibration</div>
+<div class="w-32 text-right font-data-table text-data-table text-tertiary font-bold">00:45:12.10</div>
+<div class="w-16 text-right font-data-table text-data-table text-on-surface-variant">3</div>
+<div class="w-24 flex items-center justify-end gap-2">
+<div class="w-2 h-2 rounded-full pip-paused"></div>
+<span class="font-mono-label text-mono-label text-tertiary">Paused</span>
+</div>
+<div class="w-16 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-fixed p-1 rounded" title="ACT_SELECT_RECORD">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Row 3 (Selected State Simulation) -->
+<div class="flex items-center px-md py-2 border-b border-primary bg-surface-container-highest group cursor-pointer relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="w-10 font-mono-label text-mono-label text-outline pl-1">03</div>
+<div class="flex-1 font-body-md text-body-md text-on-surface font-semibold">Reactor Cooling Loop</div>
+<div class="w-32 text-right font-data-table text-data-table text-primary font-bold">08:15:00.00</div>
+<div class="w-16 text-right font-data-table text-data-table text-on-surface-variant">42</div>
+<div class="w-24 flex items-center justify-end gap-2">
+<div class="w-2 h-2 rounded-full pip-inactive"></div>
+<span class="font-mono-label text-mono-label text-outline">Stopped</span>
+</div>
+<div class="w-16 flex justify-center opacity-100">
+<button class="text-primary hover:text-primary-fixed p-1 rounded bg-surface-dim" title="ACT_SELECT_RECORD">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+<!-- Row 4 (Running) -->
+<div class="flex items-center px-md py-2 border-b border-surface-variant hover:bg-surface-container-high transition-colors group cursor-pointer">
+<div class="w-10 font-mono-label text-mono-label text-outline">04</div>
+<div class="flex-1 font-body-md text-body-md text-on-surface">Quality Control Check B</div>
+<div class="w-32 text-right font-data-table text-data-table text-secondary font-bold">01:02:11.88</div>
+<div class="w-16 text-right font-data-table text-data-table text-on-surface-variant">5</div>
+<div class="w-24 flex items-center justify-end gap-2">
+<div class="w-2 h-2 rounded-full pip-running"></div>
+<span class="font-mono-label text-mono-label text-secondary">Running</span>
+</div>
+<div class="w-16 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-primary hover:text-primary-fixed p-1 rounded" title="ACT_SELECT_RECORD">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail Panel (Drawer/Right Sidebar) -->
+<div class="w-[400px] bg-surface-container-low flex flex-col border-l border-outline-variant shrink-0">
+<!-- Detail Header -->
+<div class="h-14 border-b border-surface-variant px-lg flex items-center justify-between bg-surface-container">
+<div>
+<div class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-0.5">ID: 03</div>
+<div class="font-headline-sm text-headline-sm text-on-surface truncate">Reactor Cooling Loop</div>
+</div>
+<div class="flex gap-1">
+<button class="w-8 h-8 rounded border border-outline-variant text-on-surface hover:bg-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</button>
+<button class="w-8 h-8 rounded border border-outline-variant text-on-surface hover:bg-surface-variant transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">stop</span>
+</button>
+</div>
+</div>
+<!-- Detail Content -->
+<div class="flex-1 overflow-y-auto p-lg flex flex-col gap-lg">
+<!-- Large Counter Display -->
+<div class="bg-surface-dim border border-surface-variant rounded p-lg flex flex-col items-center justify-center relative overflow-hidden">
+<span class="font-display-data text-[48px] leading-none text-primary font-bold tracking-tight">08:15:00</span>
+<span class="font-data-table text-[18px] text-primary mt-1">.00</span>
+<div class="absolute top-2 right-2 flex items-center gap-1 bg-surface-bright px-1.5 py-0.5 rounded">
+<div class="w-1.5 h-1.5 rounded-full pip-inactive"></div>
+<span class="font-label-caps text-[9px] text-outline uppercase">Stopped</span>
+</div>
+</div>
+<!-- Info Grid -->
+<div class="grid grid-cols-2 gap-px bg-outline-variant border border-outline-variant rounded overflow-hidden">
+<div class="bg-surface-container p-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Operator</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Dr. Aris Thorne</span>
+</div>
+<div class="bg-surface-container p-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Location</span>
+<span class="font-body-md text-body-md text-on-surface truncate">Sector 4G</span>
+</div>
+<div class="bg-surface-container p-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Target Duration</span>
+<span class="font-data-table text-data-table text-on-surface">08:00:00</span>
+</div>
+<div class="bg-surface-container p-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-1">Variance</span>
+<span class="font-data-table text-data-table text-error">+00:15:00</span>
+</div>
+</div>
+<!-- Lap Details Table inside Panel -->
+<div class="flex flex-col flex-1 border border-surface-variant rounded overflow-hidden bg-surface-container">
+<div class="bg-surface-container-highest px-sm py-xs border-b border-surface-variant flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-on-surface uppercase">Lap Data</span>
+<span class="font-mono-label text-[10px] text-outline">Total Laps: 42</span>
+</div>
+<div class="flex flex-col flex-1 overflow-y-auto">
+<!-- Lap Header -->
+<div class="flex px-sm py-1 border-b border-surface-variant font-label-caps text-[9px] text-on-surface-variant uppercase bg-surface-dim sticky top-0">
+<div class="w-8">Lap</div>
+<div class="flex-1 text-right">Split</div>
+<div class="flex-1 text-right">Total</div>
+</div>
+<!-- Lap Rows -->
+<div class="flex px-sm py-1 border-b border-surface-variant font-data-table text-[11px] hover:bg-surface-bright">
+<div class="w-8 text-outline">42</div>
+<div class="flex-1 text-right text-on-surface">00:12:05.10</div>
+<div class="flex-1 text-right text-primary">08:15:00.00</div>
+</div>
+<div class="flex px-sm py-1 border-b border-surface-variant font-data-table text-[11px] hover:bg-surface-bright">
+<div class="w-8 text-outline">41</div>
+<div class="flex-1 text-right text-on-surface">00:11:58.20</div>
+<div class="flex-1 text-right text-on-surface-variant">08:02:54.90</div>
+</div>
+<div class="flex px-sm py-1 border-b border-surface-variant font-data-table text-[11px] hover:bg-surface-bright">
+<div class="w-8 text-outline">40</div>
+<div class="flex-1 text-right text-on-surface">00:12:10.05</div>
+<div class="flex-1 text-right text-on-surface-variant">07:50:56.70</div>
+</div>
+<div class="flex px-sm py-1 border-b border-surface-variant font-data-table text-[11px] hover:bg-surface-bright">
+<div class="w-8 text-outline">39</div>
+<div class="flex-1 text-right text-on-surface">00:11:45.00</div>
+<div class="flex-1 text-right text-on-surface-variant">07:38:46.65</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

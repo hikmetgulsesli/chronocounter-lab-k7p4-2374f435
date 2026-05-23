@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChronoCounter - Stopwatch Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#00285d",
+                    "on-primary-fixed-variant": "#004395",
+                    "surface-dim": "#0b1326",
+                    "secondary-fixed-dim": "#4edea3",
+                    "background": "#0b1326",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#2d3449",
+                    "error-container": "#93000a",
+                    "surface-bright": "#31394d",
+                    "on-error": "#690005",
+                    "outline-variant": "#424754",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-fixed": "#001a42",
+                    "on-background": "#dae2fd",
+                    "surface-container-lowest": "#060e20",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary": "#ffb95f",
+                    "surface-container-low": "#131b2e",
+                    "on-primary": "#002e6a",
+                    "surface-container-highest": "#2d3449",
+                    "error": "#ffb4ab",
+                    "secondary-container": "#00a572",
+                    "on-surface-variant": "#c2c6d6",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#3e2400",
+                    "surface-tint": "#adc6ff",
+                    "on-secondary": "#003824",
+                    "primary-fixed-dim": "#adc6ff",
+                    "inverse-on-surface": "#283044",
+                    "outline": "#8c909f",
+                    "secondary-fixed": "#6ffbbe",
+                    "inverse-surface": "#dae2fd",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-tertiary": "#472a00",
+                    "primary-container": "#4d8eff",
+                    "on-surface": "#dae2fd",
+                    "secondary": "#4edea3",
+                    "on-secondary-container": "#00311f",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-high": "#222a3d",
+                    "surface-container": "#171f33",
+                    "surface": "#0b1326",
+                    "on-secondary-fixed-variant": "#005236",
+                    "primary": "#adc6ff",
+                    "tertiary-container": "#ca8100",
+                    "inverse-primary": "#005ac2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "margin": "16px",
+                    "gutter": "12px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "display-data": ["JetBrains Mono"],
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "data-table": ["JetBrains Mono"],
+                    "mono-label": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "label-caps": ["11px", {"lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "700"}],
+                    "display-data": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-table": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "mono-label": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .symbol-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Input Focus Glow simulating LED */
+        input:focus, select:focus {
+            box-shadow: 0 0 4px 1px #adc6ff;
+            border-color: #adc6ff !important;
+        }
+        
+        /* Custom scrollbar for data tables/panels */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1326; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3449; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #424754; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen antialiased flex overflow-hidden">
+<!-- SideNavBar (Shared Component JSON logic applied) -->
+<nav aria-label="Sidebar Navigation" class="bg-surface dark:bg-surface text-primary dark:text-primary font-body-md text-body-md border-r border-outline-variant h-screen w-16 flex flex-col items-center py-lg fixed left-0 top-0 h-full z-50 hidden md:flex">
+<!-- Header Avatar/System Status -->
+<div class="mb-lg flex flex-col items-center group cursor-pointer" title="System Health Indicator">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center border border-outline-variant relative">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="hub">hub</span>
+<div class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-secondary rounded-full animate-pulse border border-background"></div>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-sm hidden group-hover:block transition-all opacity-0 group-hover:opacity-100 absolute left-14 bg-surface-variant px-sm py-xs rounded">Lab K7P4</span>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex-1 flex flex-col gap-sm w-full px-sm">
+<a aria-label="Operations" class="text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 w-full h-10 rounded-lg flex items-center justify-center group relative" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<div class="absolute left-14 bg-surface-container-high text-on-surface px-sm py-xs rounded font-label-caps text-label-caps opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 border border-outline-variant">Operations</div>
+</a>
+<!-- ACTIVE TAB: Editor maps to this screen -->
+<a aria-current="page" aria-label="Editor" class="text-secondary dark:text-secondary hover:bg-surface-container-high transition-colors scale-95 active:scale-90 w-full h-10 rounded-lg flex items-center justify-center group relative bg-surface-container" href="#">
+<span class="material-symbols-outlined symbol-filled" data-icon="edit_note" data-weight="fill">edit_note</span>
+<div class="absolute left-14 bg-surface-container-high text-on-surface px-sm py-xs rounded font-label-caps text-label-caps opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 border border-outline-variant">Editor</div>
+</a>
+<a aria-label="Settings" class="text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 w-full h-10 rounded-lg flex items-center justify-center group relative" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<div class="absolute left-14 bg-surface-container-high text-on-surface px-sm py-xs rounded font-label-caps text-label-caps opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 border border-outline-variant">Settings</div>
+</a>
+</div>
+<!-- Footer Tab -->
+<div class="mt-auto w-full px-sm">
+<a aria-label="System Health" class="text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 w-full h-10 rounded-lg flex items-center justify-center group relative" href="#">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+<div class="absolute left-14 bg-surface-container-high text-on-surface px-sm py-xs rounded font-label-caps text-label-caps opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50 border border-outline-variant">System Health</div>
+</a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-1 ml-0 md:ml-16 flex flex-col h-screen overflow-hidden bg-background">
+<!-- TopAppBar (Shared Component JSON logic applied) -->
+<header aria-label="Top Navigation" class="bg-surface-container dark:bg-surface-container text-primary dark:text-primary font-headline-sm text-headline-sm border-b border-outline-variant h-12 w-full flex items-center fixed top-0 right-0 left-0 md:left-16 z-40 px-md justify-between">
+<!-- Brand / Active Navigation -->
+<div class="flex items-center gap-md">
+<span class="font-label-caps text-label-caps tracking-widest text-on-surface uppercase opacity-80">ChronoCounter</span>
+<div class="h-4 w-px bg-outline-variant mx-sm"></div>
+<nav aria-label="Breadcrumb" class="flex items-center">
+<span class="text-primary font-bold opacity-80 active:opacity-100 transition-opacity">Session: 0X-8821</span>
+</nav>
+</div>
+<!-- Trailing Actions / Search -->
+<div class="flex items-center gap-md">
+<!-- Unsaved Changes Badge (Contextual to this screen) -->
+<div class="hidden sm:flex items-center gap-xs px-sm py-1 bg-surface-variant border border-outline-variant rounded-full opacity-80">
+<div class="w-1.5 h-1.5 rounded-full bg-tertiary"></div>
+<span class="font-mono-label text-mono-label text-tertiary uppercase tracking-wider">Unsaved Changes</span>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-sm hidden sm:block"></div>
+<button aria-label="schedule" class="text-outline hover:text-primary transition-colors opacity-80 active:opacity-100 flex items-center justify-center w-8 h-8 rounded hover:bg-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="schedule">schedule</span>
+</button>
+<button class="bg-primary text-on-primary hover:bg-primary-fixed transition-colors font-mono-label text-mono-label uppercase tracking-wider px-md h-8 rounded flex items-center gap-xs">
+<span>New Stopwatch</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas (Scrollable area) -->
+<main class="flex-1 overflow-y-auto pt-12 p-md md:p-lg w-full max-w-5xl mx-auto flex flex-col gap-lg pb-24">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-md mt-sm">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Configuration Editor</h1>
+<p class="font-body-md text-body-md text-outline mt-xs">Define parameters for precision tracking node.</p>
+</div>
+</div>
+<!-- Form Panel -->
+<form action="#" class="bg-surface-container-low border border-surface-variant rounded-xl flex flex-col overflow-hidden shadow-sm">
+<!-- Panel Header -->
+<div class="bg-surface-container border-b border-surface-variant px-md py-sm flex items-center gap-sm">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="tune">tune</span>
+<h2 class="font-label-caps text-label-caps tracking-widest text-on-surface-variant uppercase">Stopwatch Parameters</h2>
+</div>
+<!-- Panel Body -->
+<div class="p-md md:p-lg flex flex-col gap-lg">
+<!-- Stopwatch Name (Error State Demo) -->
+<div class="flex flex-col gap-sm">
+<label class="font-mono-label text-mono-label text-on-surface flex items-center gap-xs" for="stopwatch_name">
+                            Stopwatch Name <span class="text-error">*</span>
+</label>
+<div class="relative">
+<input aria-describedby="name-error" aria-invalid="true" class="w-full bg-surface-container-lowest border border-error text-on-surface font-body-md text-body-md rounded h-10 px-md focus:outline-none placeholder-outline-variant transition-all" id="stopwatch_name" name="stopwatch_name" placeholder="e.g., Primary Reaction Timer" type="text" value=""/>
+<span class="material-symbols-outlined text-error absolute right-3 top-2.5 text-[20px]" data-icon="error">error</span>
+</div>
+<p class="font-mono-label text-mono-label text-error flex items-center gap-xs" id="name-error">
+                            Name is required
+                        </p>
+</div>
+<!-- Initial Offset & Category Row -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Initial Offset (Monospaced) -->
+<div class="flex flex-col gap-sm">
+<label class="font-mono-label text-mono-label text-on-surface" for="initial_offset">Initial Offset (ms)</label>
+<div class="relative flex items-center bg-surface-container-lowest border border-outline-variant rounded focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<span class="material-symbols-outlined text-outline absolute left-3 text-[18px]" data-icon="history">history</span>
+<input class="w-full bg-transparent border-none text-on-surface font-data-table text-data-table h-10 pl-10 pr-md focus:ring-0 text-right tabular-nums" id="initial_offset" name="initial_offset" step="0.01" type="number" value="0000.00"/>
+</div>
+</div>
+<!-- Session Category -->
+<div class="flex flex-col gap-sm">
+<label class="font-mono-label text-mono-label text-on-surface" for="session_category">Session Category</label>
+<div class="relative">
+<select class="w-full bg-surface-container-lowest border border-outline-variant text-on-surface font-body-md text-body-md rounded h-10 pl-md pr-10 focus:outline-none appearance-none transition-all cursor-pointer" id="session_category" name="session_category">
+<option value="ctrl">Control Group (CTRL)</option>
+<option value="test">Test Phase (TEST)</option>
+<option selected="" value="calib">Calibration (CALIB)</option>
+</select>
+<span class="material-symbols-outlined text-outline absolute right-3 top-2.5 pointer-events-none text-[20px]" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+</div>
+<!-- Alert Threshold -->
+<div class="flex flex-col gap-sm border-t border-surface-variant pt-lg mt-sm">
+<label class="font-mono-label text-mono-label text-on-surface flex items-center gap-sm" for="alert_threshold">
+                            Alert Threshold
+                            <span class="material-symbols-outlined text-outline text-[16px] cursor-help" data-icon="info" title="Triggers visual warning when limit is exceeded.">info</span>
+</label>
+<div class="flex items-center gap-md">
+<div class="relative flex items-center bg-surface-container-lowest border border-outline-variant rounded w-40 focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+<input class="w-full bg-transparent border-none text-on-surface font-data-table text-data-table h-10 px-md focus:ring-0 text-right tabular-nums" id="alert_threshold" name="alert_threshold" type="number" value="60000"/>
+</div>
+<span class="font-data-table text-data-table text-outline-variant">milliseconds</span>
+</div>
+</div>
+</div>
+<!-- Panel Actions (Footer) -->
+<div class="bg-surface-container border-t border-surface-variant p-md flex items-center justify-end gap-md">
+<button class="h-10 px-lg bg-transparent border border-outline-variant text-on-surface font-mono-label text-mono-label uppercase tracking-wider rounded hover:bg-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-container" type="button">
+                        ACT_CANCEL_EDIT
+                    </button>
+<button class="h-10 px-lg bg-primary text-on-primary font-mono-label text-mono-label uppercase tracking-wider rounded hover:bg-primary-fixed transition-colors flex items-center gap-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-container shadow-[0_0_10px_rgba(173,198,255,0.2)]" type="submit">
+<span class="material-symbols-outlined text-[18px]" data-icon="save">save</span>
+                        ACT_SAVE_RECORD
+                    </button>
+</div>
+</form>
+</main>
+</div>
+</body></html>

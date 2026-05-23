@@ -1,0 +1,46 @@
+[
+  {
+    "screenId": "efde7dce9fe942a1960bd57092839370",
+    "title": "Empty and Error Recovery - ChronoCounter Lab K7P4",
+    "htmlFile": "efde7dce9fe942a1960bd57092839370.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sXzllMjUyNWMwZjUzMTQwY2M5YzUyOWJiY2Y3ZGZkYmE5EgsSBxCN19Wi9xcYAZIBIwoKcHJvamVjdF9pZBIVQhM0NTU2MzU5MzkzNjYyNDU5MjAx&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/chronocounter-lab-k7p4-2374f435/stitch/efde7dce9fe942a1960bd57092839370.html",
+    "surfaceIds": [
+      "SURF_EMPTY_AND_ERROR_RECOVERY"
+    ]
+  },
+  {
+    "screenId": "321a05c8beef4d9ab44c8d19e5f7c0da",
+    "title": "Stopwatch Operations - ChronoCounter Lab K7P4",
+    "htmlFile": "321a05c8beef4d9ab44c8d19e5f7c0da.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2JmNTIyMWI3ODcyZDQxYjBiZDQxMWRmYzE0OTEzMjQxEgsSBxCN19Wi9xcYAZIBIwoKcHJvamVjdF9pZBIVQhM0NTU2MzU5MzkzNjYyNDU5MjAx&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/chronocounter-lab-k7p4-2374f435/stitch/321a05c8beef4d9ab44c8d19e5f7c0da.html",
+    "surfaceIds": [
+      "SURF_STOPWATCH_OPERATIONS"
+    ]
+  },
+  {
+    "screenId": "b02fdadd54af458eba99d1cd7dca8557",
+    "title": "Settings and Preferences - ChronoCounter Lab K7P4",
+    "htmlFile": "b02fdadd54af458eba99d1cd7dca8557.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2QyODgyZGVjZmRmOTQ0MzlhYTY0ZDJlNmE3YzlhYzRlEgsSBxCN19Wi9xcYAZIBIwoKcHJvamVjdF9pZBIVQhM0NTU2MzU5MzkzNjYyNDU5MjAx&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/chronocounter-lab-k7p4-2374f435/stitch/b02fdadd54af458eba99d1cd7dca8557.html",
+    "surfaceIds": [
+      "SURF_SETTINGS_AND_PREFERENCES"
+    ]
+  },
+  {
+    "screenId": "dd6e66f5851048a4a958148e0b083c2e",
+    "title": "Stopwatch Editor - ChronoCounter Lab K7P4",
+    "htmlFile": "dd6e66f5851048a4a958148e0b083c2e.html",
+    "deviceType": "DESKTOP",
+    "htmlUrl": "https://contribution.usercontent.google.com/download?c=CgthaWRhX2NvZGVmeBJ7Eh1hcHBfY29tcGFuaW9uX2dlbmVyYXRlZF9maWxlcxpaCiVodG1sX2VjZDM0MThhY2YzMDRhOWQ4ZWFkYTY4Y2FiZTBjYWQ1EgsSBxCN19Wi9xcYAZIBIwoKcHJvamVjdF9pZBIVQhM0NTU2MzU5MzkzNjYyNDU5MjAx&filename=&opi=96797242",
+    "localHtml": "/Users/setrox/projects/chronocounter-lab-k7p4-2374f435/stitch/dd6e66f5851048a4a958148e0b083c2e.html",
+    "surfaceIds": [
+      "SURF_STOPWATCH_EDITOR"
+    ]
+  }
+]

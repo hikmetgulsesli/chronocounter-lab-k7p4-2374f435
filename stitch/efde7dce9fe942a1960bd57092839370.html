@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ChronoCounter - Empty &amp; Error State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#00285d",
+                    "on-primary-fixed-variant": "#004395",
+                    "surface-dim": "#0b1326",
+                    "secondary-fixed-dim": "#4edea3",
+                    "background": "#0b1326",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#2d3449",
+                    "error-container": "#93000a",
+                    "surface-bright": "#31394d",
+                    "on-error": "#690005",
+                    "outline-variant": "#424754",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-fixed": "#001a42",
+                    "on-background": "#dae2fd",
+                    "surface-container-lowest": "#060e20",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-secondary-fixed": "#002113",
+                    "tertiary": "#ffb95f",
+                    "surface-container-low": "#131b2e",
+                    "on-primary": "#002e6a",
+                    "surface-container-highest": "#2d3449",
+                    "error": "#ffb4ab",
+                    "secondary-container": "#00a572",
+                    "on-surface-variant": "#c2c6d6",
+                    "primary-fixed": "#d8e2ff",
+                    "on-tertiary-container": "#3e2400",
+                    "surface-tint": "#adc6ff",
+                    "on-secondary": "#003824",
+                    "primary-fixed-dim": "#adc6ff",
+                    "inverse-on-surface": "#283044",
+                    "outline": "#8c909f",
+                    "secondary-fixed": "#6ffbbe",
+                    "inverse-surface": "#dae2fd",
+                    "on-tertiary-fixed": "#2a1700",
+                    "on-tertiary": "#472a00",
+                    "primary-container": "#4d8eff",
+                    "on-surface": "#dae2fd",
+                    "secondary": "#4edea3",
+                    "on-secondary-container": "#00311f",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container-high": "#222a3d",
+                    "surface-container": "#171f33",
+                    "surface": "#0b1326",
+                    "on-secondary-fixed-variant": "#005236",
+                    "primary": "#adc6ff",
+                    "tertiary-container": "#ca8100",
+                    "inverse-primary": "#005ac2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "md": "16px",
+                    "margin": "16px",
+                    "gutter": "12px",
+                    "xs": "4px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "label-caps": [
+                            "Inter"
+                    ],
+                    "display-data": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-sm": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "data-table": [
+                            "JetBrains Mono"
+                    ],
+                    "mono-label": [
+                            "JetBrains Mono"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-caps": [
+                            "11px",
+                            {
+                                    "lineHeight": "12px",
+                                    "letterSpacing": "0.08em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "display-data": [
+                            "48px",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-sm": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "data-table": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "mono-label": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        /* Pulse Animation for active indicators */
+        @keyframes pulse-emerald {
+            0% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0.7); }
+            70% { box-shadow: 0 0 0 6px rgba(78, 222, 163, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(78, 222, 163, 0); }
+        }
+        .pip-emerald {
+            background-color: theme('colors.secondary');
+            animation: pulse-emerald 2s infinite;
+        }
+        .pip-amber {
+            background-color: theme('colors.tertiary');
+        }
+        .pip-slate {
+            background-color: theme('colors.outline');
+        }
+        
+        /* Subtle glow for focus states */
+        .glow-focus:focus-within {
+            box-shadow: 0 0 0 1px theme('colors.primary');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar -->
+<nav class="bg-surface dark:bg-surface text-primary dark:text-primary font-body-md text-body-md h-screen w-16 flex flex-col items-center py-lg border-r border-outline-variant fixed left-0 top-0 z-50">
+<!-- Header / Avatar Area -->
+<div class="mb-lg flex flex-col items-center">
+<div class="h-8 w-8 rounded bg-surface-variant flex items-center justify-center border border-outline-variant mb-xs" title="Lab K7P4">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">science</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant mt-sm">Lab K7P4</span>
+</div>
+<!-- Main Navigation Tabs -->
+<div class="flex-1 w-full flex flex-col items-center gap-md">
+<!-- Active Tab: Operations (closest match for general state/session) -->
+<button class="w-12 h-12 flex flex-col items-center justify-center rounded text-secondary dark:text-secondary bg-surface-container-high transition-colors scale-95 active:scale-90 group" title="Operations">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</button>
+<!-- Inactive Tab: Editor -->
+<button class="w-12 h-12 flex flex-col items-center justify-center rounded text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 group" title="Editor">
+<span class="material-symbols-outlined">edit_note</span>
+</button>
+<!-- Inactive Tab: Settings -->
+<button class="w-12 h-12 flex flex-col items-center justify-center rounded text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 group" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<!-- Footer Tabs -->
+<div class="w-full flex flex-col items-center mt-auto pt-md border-t border-outline-variant">
+<!-- System Health Indicator -->
+<button class="w-12 h-12 flex flex-col items-center justify-center rounded text-outline dark:text-outline hover:bg-surface-container-high transition-colors scale-95 active:scale-90 group relative" title="System Health">
+<div class="absolute top-2 right-2 w-2 h-2 rounded-full pip-emerald"></div>
+<span class="material-symbols-outlined">sensors</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 ml-16 flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container dark:bg-surface-container text-primary dark:text-primary font-headline-sm text-headline-sm h-12 w-full flex items-center border-b border-outline-variant fixed top-0 right-0 left-16 z-40 px-md flex justify-between items-center">
+<div class="flex items-center gap-md">
+<!-- Brand -->
+<span class="font-label-caps text-label-caps tracking-widest text-on-surface">ChronoCounter</span>
+<!-- Separator -->
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Navigation Links -->
+<nav class="flex items-center gap-md">
+<a class="text-primary font-bold opacity-80 active:opacity-100 hover:text-primary transition-colors" href="#">Session: 0X-8821</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<!-- Search Bar -->
+<div class="relative flex items-center glow-focus bg-surface-container-lowest rounded border border-outline-variant h-8 px-sm w-64">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant mr-sm">search</span>
+<input class="bg-transparent border-none outline-none text-on-surface font-mono-label text-mono-label w-full placeholder:text-outline-variant h-full p-0" placeholder="Query session data..." type="text"/>
+</div>
+<!-- Trailing Icon Actions -->
+<button class="text-on-surface-variant hover:text-primary transition-colors opacity-80 active:opacity-100 p-sm rounded hover:bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+<!-- Trailing Primary Action -->
+<button class="bg-primary text-on-primary font-mono-label text-mono-label h-8 px-md rounded flex items-center justify-center hover:bg-primary-fixed transition-colors opacity-80 active:opacity-100">
+                    New Stopwatch
+                </button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-1 mt-12 p-lg overflow-y-auto bg-background flex flex-col items-center justify-center gap-lg">
+<div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Empty State Panel -->
+<section class="bg-surface-container-low rounded border border-outline-variant flex flex-col">
+<header class="bg-surface-container-high h-8 flex items-center px-sm border-b border-outline-variant rounded-t">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Operational Status</span>
+</header>
+<div class="p-lg flex flex-col items-center justify-center text-center flex-1 py-xl">
+<div class="w-16 h-16 rounded-full bg-surface-variant border border-outline flex items-center justify-center mb-md">
+<span class="material-symbols-outlined text-[32px] text-outline">timer_off</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-sm">No Active Stopwatches Found</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg max-w-xs">
+                            The current session contains no active tracking records. Initialize a new sequence to begin data acquisition.
+                        </p>
+<div class="flex flex-col gap-sm w-full max-w-[240px]">
+<button class="w-full bg-primary text-on-primary font-mono-label text-mono-label h-8 rounded flex items-center justify-center hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-[16px] mr-xs">add</span>
+                                New Stopwatch
+                            </button>
+<button class="w-full bg-transparent border border-outline-variant text-on-surface font-mono-label text-mono-label h-8 rounded flex items-center justify-center hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[16px] mr-xs">filter_list_off</span>
+                                Clear All Filters
+                            </button>
+</div>
+</div>
+</section>
+<!-- Error State Panel -->
+<section class="bg-surface-container-low rounded border border-error-container flex flex-col relative overflow-hidden">
+<!-- Warning stripes at top -->
+<div class="h-1 w-full flex" style="background: repeating-linear-gradient(45deg, theme('colors.error-container'), theme('colors.error-container') 10px, transparent 10px, transparent 20px);"></div>
+<header class="bg-surface-container-high h-8 flex items-center px-sm border-b border-outline-variant">
+<span class="font-label-caps text-label-caps text-error uppercase flex items-center">
+<div class="w-2 h-2 rounded-full bg-error mr-sm"></div>
+                            System Diagnostics
+                        </span>
+</header>
+<div class="p-lg flex flex-col items-start justify-center flex-1">
+<div class="flex items-center gap-sm mb-md">
+<span class="material-symbols-outlined text-[24px] text-error">sync_problem</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Sync Failure</h2>
+</div>
+<div class="bg-surface-dim border border-outline-variant rounded p-sm w-full mb-md">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Error Code</span>
+<span class="font-display-data text-[14px] text-error font-bold">ERR-772</span>
+</div>
+<p class="font-data-table text-data-table text-on-surface-variant">
+                                Upstream telemetry endpoint unreachable. Handshake timeout on port 443 during payload transmission.
+                            </p>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">
+                            Local cache is preserved, but real-time broadcast is suspended until connection is re-established.
+                        </p>
+<div class="mt-auto w-full">
+<button class="w-full bg-transparent border border-error text-error font-mono-label text-mono-label h-8 rounded flex items-center justify-center hover:bg-error-container hover:text-on-error-container transition-colors">
+<span class="material-symbols-outlined text-[16px] mr-xs">refresh</span>
+                                Re-initialize Session
+                            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

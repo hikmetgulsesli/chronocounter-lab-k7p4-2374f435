@@ -1,0 +1,38 @@
+[
+  {
+    "screenId": "efde7dce9fe942a1960bd57092839370",
+    "name": "Empty and Error Recovery - ChronoCounter Lab K7P4",
+    "type": "error",
+    "description": "Empty and Error Recovery - ChronoCounter Lab K7P4 screen",
+    "surfaceIds": [
+      "SURF_EMPTY_AND_ERROR_RECOVERY"
+    ]
+  },
+  {
+    "screenId": "321a05c8beef4d9ab44c8d19e5f7c0da",
+    "name": "Stopwatch Operations - ChronoCounter Lab K7P4",
+    "type": "app-screen",
+    "description": "Stopwatch Operations - ChronoCounter Lab K7P4 screen",
+    "surfaceIds": [
+      "SURF_STOPWATCH_OPERATIONS"
+    ]
+  },
+  {
+    "screenId": "b02fdadd54af458eba99d1cd7dca8557",
+    "name": "Settings and Preferences - ChronoCounter Lab K7P4",
+    "type": "settings",
+    "description": "Settings and Preferences - ChronoCounter Lab K7P4 screen",
+    "surfaceIds": [
+      "SURF_SETTINGS_AND_PREFERENCES"
+    ]
+  },
+  {
+    "screenId": "dd6e66f5851048a4a958148e0b083c2e",
+    "name": "Stopwatch Editor - ChronoCounter Lab K7P4",
+    "type": "form",
+    "description": "Stopwatch Editor - ChronoCounter Lab K7P4 screen",
+    "surfaceIds": [
+      "SURF_STOPWATCH_EDITOR"
+    ]
+  }
+]
