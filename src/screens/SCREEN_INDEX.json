@@ -1,0 +1,301 @@
+[
+  {
+    "screenId": "efde7dce9fe942a1960bd57092839370",
+    "title": "Empty and Error Recovery - ChronoCounter Lab K7P4",
+    "componentName": "EmptyAndErrorRecoveryChronocounterLabK7p4",
+    "file": "src/screens/EmptyAndErrorRecoveryChronocounterLabK7p4.tsx",
+    "buttons": 9,
+    "inputs": 1,
+    "links": 1,
+    "actions": [
+      {
+        "id": "button-1-1",
+        "kind": "button",
+        "label": "Button 1",
+        "index": 0
+      },
+      {
+        "id": "button-2-2",
+        "kind": "button",
+        "label": "Button 2",
+        "index": 1
+      },
+      {
+        "id": "button-3-3",
+        "kind": "button",
+        "label": "Button 3",
+        "index": 2
+      },
+      {
+        "id": "button-4-4",
+        "kind": "button",
+        "label": "Button 4",
+        "index": 3
+      },
+      {
+        "id": "button-5-5",
+        "kind": "button",
+        "label": "Button 5",
+        "index": 4
+      },
+      {
+        "id": "new-stopwatch-6",
+        "kind": "button",
+        "label": "New Stopwatch",
+        "index": 5
+      },
+      {
+        "id": "new-stopwatch-7",
+        "kind": "button",
+        "label": "New Stopwatch",
+        "index": 6
+      },
+      {
+        "id": "clear-all-filters-8",
+        "kind": "button",
+        "label": "Clear All Filters",
+        "index": 7
+      },
+      {
+        "id": "re-initialize-session-9",
+        "kind": "button",
+        "label": "Re-initialize Session",
+        "index": 8
+      },
+      {
+        "id": "session-0x-8821-1",
+        "kind": "link",
+        "label": "Session: 0X-8821",
+        "href": "#",
+        "index": 0
+      }
+    ]
+  },
+  {
+    "screenId": "321a05c8beef4d9ab44c8d19e5f7c0da",
+    "title": "Stopwatch Operations - ChronoCounter Lab K7P4",
+    "componentName": "StopwatchOperationsChronocounterLabK7p4",
+    "file": "src/screens/StopwatchOperationsChronocounterLabK7p4.tsx",
+    "buttons": 12,
+    "inputs": 1,
+    "links": 0,
+    "actions": [
+      {
+        "id": "operations-1",
+        "kind": "button",
+        "label": "Operations",
+        "index": 0
+      },
+      {
+        "id": "editor-2",
+        "kind": "button",
+        "label": "Editor",
+        "index": 1
+      },
+      {
+        "id": "settings-3",
+        "kind": "button",
+        "label": "Settings",
+        "index": 2
+      },
+      {
+        "id": "button-4-4",
+        "kind": "button",
+        "label": "Button 4",
+        "index": 3
+      },
+      {
+        "id": "button-5-5",
+        "kind": "button",
+        "label": "Button 5",
+        "index": 4
+      },
+      {
+        "id": "act-create-record-6",
+        "kind": "button",
+        "label": "ACT_CREATE_RECORD",
+        "index": 5
+      },
+      {
+        "id": "button-7-7",
+        "kind": "button",
+        "label": "Button 7",
+        "index": 6
+      },
+      {
+        "id": "button-8-8",
+        "kind": "button",
+        "label": "Button 8",
+        "index": 7
+      },
+      {
+        "id": "button-9-9",
+        "kind": "button",
+        "label": "Button 9",
+        "index": 8
+      },
+      {
+        "id": "button-10-10",
+        "kind": "button",
+        "label": "Button 10",
+        "index": 9
+      },
+      {
+        "id": "button-11-11",
+        "kind": "button",
+        "label": "Button 11",
+        "index": 10
+      },
+      {
+        "id": "button-12-12",
+        "kind": "button",
+        "label": "Button 12",
+        "index": 11
+      }
+    ]
+  },
+  {
+    "screenId": "b02fdadd54af458eba99d1cd7dca8557",
+    "title": "Settings and Preferences - ChronoCounter Lab K7P4",
+    "componentName": "SettingsAndPreferencesChronocounterLabK7p4",
+    "file": "src/screens/SettingsAndPreferencesChronocounterLabK7p4.tsx",
+    "buttons": 7,
+    "inputs": 6,
+    "links": 4,
+    "actions": [
+      {
+        "id": "new-stopwatch-1",
+        "kind": "button",
+        "label": "New Stopwatch",
+        "index": 0
+      },
+      {
+        "id": "button-2-2",
+        "kind": "button",
+        "label": "Button 2",
+        "index": 1
+      },
+      {
+        "id": "discard-changes-3",
+        "kind": "button",
+        "label": "Discard Changes",
+        "index": 2
+      },
+      {
+        "id": "apply-configuration-4",
+        "kind": "button",
+        "label": "Apply Configuration",
+        "index": 3
+      },
+      {
+        "id": "standard-5",
+        "kind": "button",
+        "label": "Standard",
+        "index": 4
+      },
+      {
+        "id": "compact-6",
+        "kind": "button",
+        "label": "Compact",
+        "index": 5
+      },
+      {
+        "id": "factory-reset-7",
+        "kind": "button",
+        "label": "Factory Reset",
+        "index": 6
+      },
+      {
+        "id": "link-1",
+        "kind": "link",
+        "label": "#",
+        "href": "#",
+        "index": 0
+      },
+      {
+        "id": "link-2",
+        "kind": "link",
+        "label": "#",
+        "href": "#",
+        "index": 1
+      },
+      {
+        "id": "link-3",
+        "kind": "link",
+        "label": "#",
+        "href": "#",
+        "index": 2
+      },
+      {
+        "id": "link-4",
+        "kind": "link",
+        "label": "#",
+        "href": "#",
+        "index": 3
+      }
+    ]
+  },
+  {
+    "screenId": "dd6e66f5851048a4a958148e0b083c2e",
+    "title": "Stopwatch Editor - ChronoCounter Lab K7P4",
+    "componentName": "StopwatchEditorChronocounterLabK7p4",
+    "file": "src/screens/StopwatchEditorChronocounterLabK7p4.tsx",
+    "buttons": 4,
+    "inputs": 3,
+    "links": 4,
+    "actions": [
+      {
+        "id": "button-1-1",
+        "kind": "button",
+        "label": "Button 1",
+        "index": 0
+      },
+      {
+        "id": "new-stopwatch-2",
+        "kind": "button",
+        "label": "New Stopwatch",
+        "index": 1
+      },
+      {
+        "id": "act-cancel-edit-3",
+        "kind": "button",
+        "label": "ACT_CANCEL_EDIT",
+        "index": 2
+      },
+      {
+        "id": "act-save-record-4",
+        "kind": "button",
+        "label": "ACT_SAVE_RECORD",
+        "index": 3
+      },
+      {
+        "id": "operations-1",
+        "kind": "link",
+        "label": "Operations",
+        "href": "#",
+        "index": 0
+      },
+      {
+        "id": "editor-2",
+        "kind": "link",
+        "label": "Editor",
+        "href": "#",
+        "index": 1
+      },
+      {
+        "id": "settings-3",
+        "kind": "link",
+        "label": "Settings",
+        "href": "#",
+        "index": 2
+      },
+      {
+        "id": "system-health-4",
+        "kind": "link",
+        "label": "System Health",
+        "href": "#",
+        "index": 3
+      }
+    ]
+  }
+]
