@@ -92,7 +92,7 @@ export default function App() {
       data-active-screen={state.activeScreen}
       data-active-panel={state.activePanel}
       data-storage-status={state.storageStatus}
-      className="min-h-screen bg-slate-50 text-slate-950"
+      className="min-h-screen overflow-x-clip bg-slate-50 text-slate-950"
     >
       <section
         aria-label="ChronoCounter session status"
