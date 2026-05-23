@@ -29,11 +29,15 @@ body {
   min-width: 0;
 }
 
-[data-setfarm-root='chronocounter-lab-k7p4'] :is(.left-16, .ml-16, [class~='left-[64px]'], [class~='ml-[64px]']).w-full,
+[data-setfarm-root='chronocounter-lab-k7p4'] :is(.left-16, .ml-16, [class~='left-[64px]'], [class~='ml-[64px]']):is(.w-full, .w-screen, [class~='w-[100vw]']),
 [data-setfarm-root='chronocounter-lab-k7p4'] :is(.left-16, [class~='left-[64px]']):is(.fixed, .absolute) {
   right: 0;
   width: calc(100vw - 4rem);
   max-width: calc(100vw - 4rem);
+}
+
+[data-setfarm-root='chronocounter-lab-k7p4'] :is(.left-16, [class~='left-[64px]']):is(.fixed, .absolute) :is(.w-full, .w-screen, [class~='w-[100vw]']) {
+  max-width: 100%;
 }
 
 [data-setfarm-root='chronocounter-lab-k7p4'] nav.w-16 span {
